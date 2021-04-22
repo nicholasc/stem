@@ -19,3 +19,6 @@ file(GLOB_RECURSE SOURCES ${CMAKE_SOURCE_DIR}/src/**.cpp)
 
 # create library target
 add_library(stem ${SOURCES})
+
+# add examples
+add_subdirectory(examples)
