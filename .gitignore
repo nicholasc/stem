@@ -1,0 +1,5 @@
+# folders
+build/
+
+# os specific
+.DS_Store

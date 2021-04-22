@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "name": "Mac",
+      "includePath": [
+        "/usr/local/include",
+        "${workspaceFolder}/src/**",
+        "${workspaceFolder}/include/**"
+      ],
+      "compileCommands": "${workspaceFolder}/build/compile_commands.json"
+    }
+  ],
+  "version": 4
+}

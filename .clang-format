@@ -1,0 +1,45 @@
+---
+Language:                           Cpp
+IndentWidth:                        2
+ColumnLimit:                        80
+UseTab:                             Never
+
+AccessModifierOffset:                           -2
+AlignAfterOpenBracket:                          AlwaysBreak
+AlignConsecutiveAssignments:                    false
+AlignConsecutiveDeclarations:                   false
+AlignConsecutiveMacros:                         false
+AlignEscapedNewlines:                           Right
+AlignOperands:                                  true
+AlignTrailingComments:                          true
+AllowAllArgumentsOnNextLine:                    true
+AllowAllConstructorInitializersOnNextLine:      false
+AllowAllParametersOfDeclarationOnNextLine:      false
+AllowShortBlocksOnASingleLine:                  Never
+AllowShortCaseLabelsOnASingleLine:              true
+AllowShortFunctionsOnASingleLine:               None
+AllowShortIfStatementsOnASingleLine:            Always
+AllowShortLambdasOnASingleLine:                 Inline
+AllowShortLoopsOnASingleLine:                   false
+AlwaysBreakAfterReturnType:                     None
+AlwaysBreakBeforeMultilineStrings:              false
+AlwaysBreakTemplateDeclarations:                Yes 
+BinPackArguments:                               false 
+BinPackParameters:                              false
+BreakBeforeBinaryOperators:                     None
+BreakBeforeBraces:                              Attach
+BreakBeforeClosingBracket:                      true
+BreakBeforeTernaryOperators:                    false
+BreakConstructorInitializers:                   AfterColon
+BreakInheritanceList:                           AfterColon
+BreakStringLiterals:                            true
+CompactNamespaces:                              false
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
+ConstructorInitializerIndentWidth:              2
+ContinuationIndentWidth:                        2
+
+
+
+
+PointerAlignment:                               Right
+SortIncludes:                                   false
