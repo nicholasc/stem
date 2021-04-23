@@ -1,6 +1,5 @@
 # folders
 build/
-libs/
 
 # os specific
 .DS_Store
