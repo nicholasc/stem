@@ -14,14 +14,15 @@ set(PROJECT_VERSION_PATCH 0)
 # find opengl implementation
 find_package(OpenGL REQUIRED)
 
-# add dependencies 
-add_subdirectory(libs/glfw)
+# include dependencies
+include(cmake/glfw.cmake)
+include(cmake/glad.cmake)
 
 # include header directory
-include_directories(${CMAKE_SOURCE_DIR}/include)
+include_directories(include)
 
 # locate all source files
-file(GLOB_RECURSE SOURCES ${CMAKE_SOURCE_DIR}/src/**.cpp)
+file(GLOB_RECURSE SOURCES src/**.cpp)
 
 # add library target
 add_library(stem ${SOURCES})
@@ -30,6 +31,7 @@ add_library(stem ${SOURCES})
 target_link_libraries(stem
   ${OPENGL_LIBRARIES}
   glfw
+  glad
 )
 
 # add examples
