@@ -1,6 +1,6 @@
 #define GL_SILENCE_DEPRECATION
 
-#include <OpenGL/gl.h>
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 int main(void) {
@@ -18,6 +18,8 @@ int main(void) {
 
   /* Make the window's context current */
   glfwMakeContextCurrent(window);
+
+  const int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 
   /* Loop until the user closes the window */
   while (!glfwWindowShouldClose(window)) {
