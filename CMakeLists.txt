@@ -34,5 +34,8 @@ target_link_libraries(stem
   glad
 )
 
+# add tests
+add_subdirectory(tests)
+
 # add examples
 add_subdirectory(examples)
