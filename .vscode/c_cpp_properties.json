@@ -7,8 +7,7 @@
         "${workspaceFolder}/include/**",
         "${workspaceFolder}/libs/glad/include/**",
         "${workspaceFolder}/libs/glfw/include/**"
-      ],
-      "compileCommands": "${workspaceFolder}/build/compile_commands.json"
+      ]
     }
   ],
   "version": 4

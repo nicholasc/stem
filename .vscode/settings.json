@@ -89,6 +89,8 @@
     "bitset": "cpp",
     "ios": "cpp",
     "locale": "cpp",
-    "queue": "cpp"
+    "queue": "cpp",
+    "variant": "cpp",
+    "regex": "cpp"
   }
 }
