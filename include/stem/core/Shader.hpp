@@ -49,7 +49,7 @@ public:
   /// @brief Sets the shader source
   /// @param source A string containing the shader's source code
   /// @return void
-  void setSource(const std::string source) const;
+  void setSource(const std::string &source) const;
 };
 
 #include "Shader.inl"

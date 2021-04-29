@@ -38,7 +38,7 @@ const uint32_t Shader<type>::getId() const {
 }
 
 template <uint32_t type>
-void Shader<type>::setSource(const std::string source) const {
+void Shader<type>::setSource(const std::string &source) const {
   const char *src = source.c_str();
   glShaderSource(_id, 1, &src, 0);
 }
