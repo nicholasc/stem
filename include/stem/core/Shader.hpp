@@ -25,22 +25,9 @@ public:
   /// @return Shader
   Shader();
 
-  /// @brief Shader's constructor
-  /// @param source A string containing the shader's source code
-  /// @return Shader
-  Shader(const std::string source);
-
   /// @brief Shader's deconstructor
   /// @return void
   ~Shader();
-
-  /// @brief Compiles the shader source code
-  /// @return void
-  void compile() const;
-
-  /// @brief Destroys the shader instance
-  /// @return void
-  void destroy();
 
   /// @brief Returns the shader identifier
   /// @return The shader identifier
@@ -50,6 +37,14 @@ public:
   /// @param source A string containing the shader's source code
   /// @return void
   void setSource(const std::string &source) const;
+
+  /// @brief Compiles the shader source code
+  /// @return void
+  void compile() const;
+
+  /// @brief Destroys the shader instance
+  /// @return void
+  void destroy();
 };
 
 #include "Shader.inl"
