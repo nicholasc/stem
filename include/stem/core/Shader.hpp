@@ -21,11 +21,11 @@ private:
   uint32_t _id = 0;
 
 public:
-  /// @brief Shader's constructor
+  /// @brief Shader constructor
   /// @return Shader
   Shader();
 
-  /// @brief Shader's deconstructor
+  /// @brief Shader deconstructor
   /// @return void
   ~Shader();
 
