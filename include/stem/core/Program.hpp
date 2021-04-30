@@ -1,6 +1,11 @@
 #pragma once
 
 #include <string>
+#include <variant>
+#include <utility>
+#include <vector>
+#include <unordered_map>
+
 #include <glad/gl.h>
 #include <stem/Exception.hpp>
 
@@ -24,8 +29,38 @@ public:
 
 class Program {
 private:
+  /// @brief Allows a variation of types for a uniform value
+  typedef std::variant<std::monostate, float, double> UniformValue;
+
+  /// @brief
+  struct Uniform {
+    std::string name;
+    UniformValue value;
+  };
+
+  struct ActiveUniform {
+  private:
+    const int location;
+    const uint32_t type;
+    UniformValue _value;
+
+  public:
+    ActiveUniform(const int location, const uint32_t type) :
+      location(location), type(type) {
+    }
+
+    void setValue(const UniformValue value) {
+      _value = value;
+    }
+  };
+
   /// @brief The internal gl program identifier
   uint32_t _id;
+
+  std::unordered_map<std::string, UniformValue> _uniforms;
+
+  /// @brief The program's active uniforms
+  std::unordered_map<std::string, ActiveUniform> _activeUniforms;
 
   /// @brief Compiles, attaches and destroys a shader to the program.
   /// @param type The type of shader we're compiling
@@ -39,6 +74,7 @@ public:
     const std::string vertex;
     const std::string fragment;
     const std::string geometry;
+    const std::vector<Uniform> uniforms;
   };
 
   /// @brief Program constructor
