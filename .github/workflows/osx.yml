@@ -17,4 +17,4 @@ jobs:
       - name: build
         run: cmake --build "${{ env.CMAKE_BUILD_DIR }}"
       - name: test
-        run: ./tests/tests
+        run: ${{ env.CMAKE_BUILD_DIR }}/tests/tests
