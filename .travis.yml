@@ -4,7 +4,7 @@ sudo: required
 matrix:
   include:
     - os: osx
-      osx_image: xcode8
+      osx_image: xcode12
       compiler: clang
       env:
         - COMPILER="clang++" BUILD_TYPE="Debug"
