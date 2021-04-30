@@ -13,8 +13,8 @@ jobs:
       - name: install dependencies
         run: brew install cmake
       - name: configure project
-        run: cmake -H. -B "${{ env.CMAKE_BUILD_DIR }}" -DGLFW_BUILD_EXAMPLES=OFF -DGLFW_BUILD_TESTS=OFF -DGLFW_BUILD_DOCS=OFF
+        run: cmake -H. -B "${{ env.CMAKE_BUILD_DIR }}" -DENABLE_GL_TESTS=OFF -DGLFW_BUILD_EXAMPLES=OFF -DGLFW_BUILD_TESTS=OFF -DGLFW_BUILD_DOCS=OFF
       - name: build
         run: cmake --build "${{ env.CMAKE_BUILD_DIR }}"
       - name: test
-        run: ${{ env.CMAKE_BUILD_DIR }}/tests/tests
+        run: ${{ env.CMAKE_BUILD_DIR }}tests/tests
