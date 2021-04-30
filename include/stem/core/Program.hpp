@@ -44,7 +44,7 @@ public:
   /// @brief Program constructor
   /// @param settings The program settings
   /// @return Program
-  Program(const Settings settings);
+  Program(const Settings settings = Settings());
 
   /// @brief Program destructor
   /// @return void
