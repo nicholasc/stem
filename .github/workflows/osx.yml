@@ -16,3 +16,5 @@ jobs:
         run: cmake -H. -B "${{ env.CMAKE_BUILD_DIR }}" -DGLFW_BUILD_EXAMPLES=OFF -DGLFW_BUILD_TESTS=OFF -DGLFW_BUILD_DOCS=OFF
       - name: build
         run: cmake --build "${{ env.CMAKE_BUILD_DIR }}"
+      - test: test
+        run: ./tests/tests
