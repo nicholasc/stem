@@ -1,4 +1,3 @@
-
 # example sources
 set(SOURCES main.cpp)
 
