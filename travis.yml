@@ -1,0 +1,20 @@
+language: cpp
+sudo: required
+
+matrix:
+  include:
+    - os: osx
+      osx_image: xcode8
+      compiler: clang
+      env:
+        - COMPILER="clang++" BUILD_TYPE="Debug"
+
+before_install:
+  - export CXX=${COMPILER}
+  - cd ${TRAVIS_BUILD_DIR}
+  - cmake -H. -Bbuild -DGLFW_BUILD_EXAMPLES=OFF -DGLFW_BUILD_TESTS=OFF -DGLFW_BUILD_DOCS=OFF -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -Wdev
+  - cd build
+
+script:
+  - make -j 4
+  - ./tests/tests
