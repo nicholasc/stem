@@ -1,7 +1,17 @@
-#include <stem/core/Shader.hpp>
+#include <iostream>
 #include <stem/core/Program.hpp>
 
 namespace stem {
+
+ShaderSyntaxError::ShaderSyntaxError(const uint32_t id) {
+  int length = 0;
+  glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
+
+  char buffer[length];
+  glGetShaderInfoLog(id, length, NULL, buffer);
+
+  _message = buffer;
+}
 
 ProgramLinkException::ProgramLinkException(const uint32_t id) {
   int length = 0;
@@ -13,66 +23,51 @@ ProgramLinkException::ProgramLinkException(const uint32_t id) {
   _message = buffer;
 }
 
-Program::Program() {
+void Program::compile(const GLenum type, const std::string &source) const {
+  if (source.empty()) return;
+
+  const char *src = source.c_str();
+
+  int shaderId = glCreateShader(type);
+  glShaderSource(shaderId, 1, &src, 0);
+  glCompileShader(shaderId);
+
+  GLint success;
+  glGetShaderiv(shaderId, GL_COMPILE_STATUS, &success);
+
+  if (!success) {
+    throw ShaderSyntaxError(shaderId);
+  }
+
+  // attach shader to the program & release
+  glAttachShader(_id, shaderId);
+  glDeleteShader(shaderId);
+}
+
+Program::Program(const Settings settings) {
   _id = glCreateProgram();
+
+  compile(GL_VERTEX_SHADER, settings.vertex);
+  compile(GL_GEOMETRY_SHADER, settings.geometry);
+  compile(GL_FRAGMENT_SHADER, settings.fragment);
+
+  glLinkProgram(_id);
+  glValidateProgram(_id);
+
+  int success;
+  glGetProgramiv(_id, GL_LINK_STATUS, &success);
+
+  if (!success) {
+    throw ProgramLinkException(_id);
+  }
 }
 
 Program::~Program() {
   destroy();
 }
 
-void Program::setSource(
-  const std::string &vertexSource,
-  const std::string &fragmentSource
-) const {
-  setSource(vertexSource, NULL, fragmentSource);
-}
-
-void Program::setSource(
-  const std::string &vertexSource,
-  const std::string &geometrySource,
-  const std::string &fragmentSource
-) const {
-  if (vertexSource.c_str()) {
-    VertexShader vertex;
-    vertex.setSource(vertexSource.c_str());
-    vertex.compile();
-
-    glAttachShader(_id, vertex.getId());
-
-    vertex.destroy();
-  }
-
-  if (geometrySource.c_str()) {
-    GeometryShader geometry;
-    geometry.setSource(geometrySource.c_str());
-    geometry.compile();
-
-    glAttachShader(_id, geometry.getId());
-
-    geometry.destroy();
-  }
-
-  if (fragmentSource.c_str()) {
-    FragmentShader fragment;
-    fragment.setSource(fragmentSource.c_str());
-    fragment.compile();
-
-    glAttachShader(_id, fragment.getId());
-
-    fragment.destroy();
-  }
-}
-
-void Program::link() const {
-  glLinkProgram(_id);
-
-  GLint success;
-  glGetProgramiv(_id, GL_LINK_STATUS, &success);
-
-  if (!success) {
-    throw ProgramLinkException(_id);
-  }
+const uint32_t Program::getId() const {
+  return _id;
 }
 
 void Program::use() const {

@@ -4,10 +4,15 @@
 #include <glad/gl.h>
 #include <stem/Exception.hpp>
 
-class VertexShader;
-class FragmentShader;
-
 namespace stem {
+
+class ShaderSyntaxError : public Exception {
+public:
+  /// @brief ShaderSyntaxError's class constructor
+  /// @param id The faulty shader's OpenGL identifier
+  /// @return ShaderSyntaxError
+  ShaderSyntaxError(const uint32_t id);
+};
 
 class ProgramLinkException : public Exception {
 public:
@@ -22,10 +27,24 @@ private:
   /// @brief The internal gl program identifier
   uint32_t _id;
 
+  /// @brief Compiles, attaches and destroys a shader to the program.
+  /// @param type The type of shader we're compiling
+  /// @param source The shader's source code
+  /// @return void
+  void compile(const GLenum type, const std::string &source) const;
+
 public:
+  /// @brief Allowed settings when creating a program
+  struct Settings {
+    const std::string vertex;
+    const std::string fragment;
+    const std::string geometry;
+  };
+
   /// @brief Program constructor
+  /// @param settings The program settings
   /// @return Program
-  Program();
+  Program(const Settings settings);
 
   /// @brief Program destructor
   /// @return void
@@ -34,30 +53,6 @@ public:
   /// @brief Returns the shader identifier
   /// @return The shader identifier
   const uint32_t getId() const;
-
-  /// @brief Sets the program's shaders source code
-  /// @param vertexSource The source of the vertex shader
-  /// @param fragmentShader The source of the fragment shader
-  /// @return void
-  void setSource(
-    const std::string &vertexSource,
-    const std::string &fragmentSource
-  ) const;
-
-  /// @brief Sets the program's shaders source code & compiles them
-  /// @param vertexSource The source of the vertex shader
-  /// @param geometrySource The source of the geometry shader
-  /// @param fragmentShader The source of the fragment shader
-  /// @return void
-  void setSource(
-    const std::string &vertexSource,
-    const std::string &geometrySource,
-    const std::string &fragmentSource
-  ) const;
-
-  /// @brief Links the program object
-  /// @return void
-  void link() const;
 
   /// @brief Binds the program for usage in the current rendering state
   /// @return void
