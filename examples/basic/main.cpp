@@ -46,11 +46,11 @@ int main(void) {
   const std::string fragment = R"(
     #version 330 core
     layout(location = 0) out vec4 color;
-    uniform vec2 resolution;
+    uniform float resolution;
 
     void main() {
       vec2 uv = gl_FragCoord.xy / resolution;
-      color = vec4(0.0, 1.0, 0.0, 1.0);
+      color = vec4(0.0, 0.0, resolution, 1.0);
     }
   )";
 

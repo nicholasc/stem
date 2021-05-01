@@ -55,7 +55,7 @@ Program::Program(const Settings settings) {
   // create program
   _id = glCreateProgram();
 
-  // attempt to compile shaders
+  // compile shaders
   compile(GL_VERTEX_SHADER, settings.vertex);
   compile(GL_GEOMETRY_SHADER, settings.geometry);
   compile(GL_FRAGMENT_SHADER, settings.fragment);
@@ -71,39 +71,40 @@ Program::Program(const Settings settings) {
     throw ProgramLinkException(_id);
   }
 
-  // determine ammount of active uniforms in the program
+  // get active uniforms count
   int count;
   glGetProgramiv(_id, GL_ACTIVE_UNIFORMS, &count);
 
-  // iterate & store for value binding on program usage
+  // iterate & store for value binding on usage
   for (int index = 0; index < count; index++) {
     char buffer[64];
     int length = 0;
     int size = 0;
     uint32_t type = 0;
 
-    // retrieve the active uniform information
+    // get active uniform information
     glGetActiveUniform(
       _id, index, sizeof(buffer), &length, &size, &type, buffer
     );
 
-    // retrieve location & convert buffer to name
+    // get location & convert buffer to name
     const int location = glGetUniformLocation(_id, buffer);
     const std::string name(buffer);
 
-    // insert the newly active uniform
+    // store active uniform
     _activeUniforms.insert(std::make_pair(name, ActiveUniform(location, type)));
   }
 
-  // iterate user specified uniforms
+  // iterate uniforms settings
   for (const Uniform uniform : settings.uniforms) {
-    // attempt to find a matching active uniform
+    // find matching active uniform or skip
     auto iterator = _activeUniforms.find(uniform.name);
     if (iterator == _activeUniforms.end()) continue;
 
     // store the user uniform value
     ActiveUniform &activeUniform = iterator->second;
-    activeUniform.setValue(uniform.value);
+    activeUniform.value = uniform.value;
+    activeUniform.needsUpdate = true;
   }
 }
 
@@ -115,8 +116,31 @@ const uint32_t Program::getId() const {
   return _id;
 }
 
-void Program::use() const {
+void Program::use() {
+  // bind program for usage
   glUseProgram(_id);
+
+  // iterate active uniforms
+  for (std::pair<const std::string, ActiveUniform> &pair : _activeUniforms) {
+    // get a reference to the active uniform
+    ActiveUniform &uniform = pair.second;
+
+    // only proceed with changed uniforms
+    if (!uniform.needsUpdate) continue;
+
+    // send the value the program on the gpu
+    switch (uniform.type) {
+    case GL_FLOAT:
+      glUniform1f(uniform.location, std::get<float>(uniform.value));
+      break;
+    case GL_DOUBLE:
+      glUniform1f(uniform.location, std::get<double>(uniform.value));
+      break;
+    }
+
+    // mark uniform as updated
+    uniform.needsUpdate = false;
+  }
 }
 
 void Program::destroy() {
