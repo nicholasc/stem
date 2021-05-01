@@ -97,14 +97,7 @@ Program::Program(const Settings settings) {
 
   // iterate uniforms settings
   for (const Uniform uniform : settings.uniforms) {
-    // find matching active uniform or skip
-    auto iterator = _activeUniforms.find(uniform.name);
-    if (iterator == _activeUniforms.end()) continue;
-
-    // store the user uniform value
-    ActiveUniform &activeUniform = iterator->second;
-    activeUniform.value = uniform.value;
-    activeUniform.needsUpdate = true;
+    setUniform(uniform);
   }
 }
 
@@ -115,6 +108,21 @@ Program::~Program() {
 const uint32_t Program::getId() const {
   return _id;
 }
+
+void Program::setUniform(const std::string name, const UniformValue value) {
+  // find matching active uniform or skip
+  auto iterator = _activeUniforms.find(name);
+  if (iterator == _activeUniforms.end()) return;
+
+  // store the uniform value
+  ActiveUniform &activeUniform = iterator->second;
+  activeUniform.value = value;
+  activeUniform.needsUpdate = true;
+}
+
+void Program::setUniform(const Uniform uniform) {
+  setUniform(uniform.name, uniform.value);
+};
 
 void Program::use() {
   // bind program for usage

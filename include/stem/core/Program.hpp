@@ -69,6 +69,17 @@ public:
   /// @return The shader identifier
   const uint32_t getId() const;
 
+  /// @brief Sets the value of an active uniform if it exists
+  /// @param name The name of the targeted active uniform
+  /// @param value The value to set
+  /// @return void
+  void setUniform(const std::string name, const UniformValue value);
+
+  /// @brief Sets the value of an active uniform if it exists
+  /// @param uniform The uniform data for the targeted active uniform
+  /// @return void
+  void setUniform(const Uniform uniform);
+
   /// @brief Binds the program for usage
   /// @return void
   void use();
