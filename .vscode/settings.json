@@ -91,6 +91,8 @@
     "locale": "cpp",
     "queue": "cpp",
     "variant": "cpp",
-    "regex": "cpp"
+    "regex": "cpp",
+    "future": "cpp",
+    "shared_mutex": "cpp"
   }
 }
