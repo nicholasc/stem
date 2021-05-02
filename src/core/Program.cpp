@@ -1,4 +1,5 @@
 #include <iostream>
+#include <glm/gtc/type_ptr.hpp>
 #include <stem/core/Program.hpp>
 
 namespace stem {
@@ -138,11 +139,37 @@ void Program::use() {
 
     // send the value the program on the gpu
     switch (uniform.type) {
+    case GL_INT:
+      glUniform1i(uniform.location, std::get<int>(uniform.value));
+      break;
+    case GL_UNSIGNED_INT:
+      glUniform1f(uniform.location, std::get<unsigned int>(uniform.value));
+      break;
     case GL_FLOAT:
       glUniform1f(uniform.location, std::get<float>(uniform.value));
       break;
     case GL_DOUBLE:
       glUniform1f(uniform.location, std::get<double>(uniform.value));
+      break;
+    case GL_INT_VEC2:
+      glUniform2iv(
+        uniform.location, 1, glm::value_ptr(std::get<Vector2i>(uniform.value))
+      );
+      break;
+    case GL_UNSIGNED_INT_VEC2:
+      glUniform2uiv(
+        uniform.location, 1, glm::value_ptr(std::get<Vector2u>(uniform.value))
+      );
+      break;
+    case GL_FLOAT_VEC2:
+      glUniform2fv(
+        uniform.location, 1, glm::value_ptr(std::get<Vector2f>(uniform.value))
+      );
+      break;
+    case GL_DOUBLE_VEC2:
+      glUniform2dv(
+        uniform.location, 1, glm::value_ptr(std::get<Vector2d>(uniform.value))
+      );
       break;
     }
 

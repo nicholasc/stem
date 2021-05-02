@@ -8,6 +8,7 @@
 
 #include <glad/gl.h>
 #include <stem/Exception.hpp>
+#include <stem/math/Vector2.hpp>
 
 namespace stem {
 
@@ -29,8 +30,17 @@ public:
 
 class Program {
 public:
-  /// @brief Allows a variation of types as uniform values
-  typedef std::variant<std::monostate, float, double> UniformValue;
+  /// @brief Defines posible variations for uniform values
+  typedef std::variant<
+    int,
+    unsigned int,
+    float,
+    double,
+    Vector2i,
+    Vector2u,
+    Vector2f,
+    Vector2d>
+    UniformValue;
 
   /// @brief A simple uniform structure
   struct Uniform {
