@@ -4,6 +4,7 @@
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 #include <stem/core/Program.hpp>
+#include <stem/math/Vector2.hpp>
 
 int main(void) {
   GLFWwindow *window;
@@ -46,11 +47,11 @@ int main(void) {
   const std::string fragment = R"(
     #version 330 core
     layout(location = 0) out vec4 color;
-    uniform float resolution;
+    uniform vec2 resolution;
 
     void main() {
       vec2 uv = gl_FragCoord.xy / resolution;
-      color = vec4(0.0, 0.0, resolution, 1.0);
+      color = vec4(uv.x, uv.y, 0.0, 1.0);
     }
   )";
 
@@ -59,7 +60,7 @@ int main(void) {
     .fragment = fragment,
     .uniforms =
       {
-        {.name = "resolution", .value = 1.0f},
+        {.name = "resolution", .value = stem::Vector2f{640.f, 480.f}},
       },
   });
 
