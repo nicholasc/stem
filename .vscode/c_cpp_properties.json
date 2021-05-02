@@ -7,7 +7,8 @@
         "${workspaceFolder}/include/**",
         "${workspaceFolder}/libs/catch/**",
         "${workspaceFolder}/libs/glad/include/**",
-        "${workspaceFolder}/libs/glfw/include/**"
+        "${workspaceFolder}/libs/glfw/include/**",
+        "${workspaceFolder}/libs/glm/**"
       ]
     }
   ],

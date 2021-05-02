@@ -15,8 +15,9 @@ set(PROJECT_VERSION_PATCH 0)
 find_package(OpenGL REQUIRED)
 
 # include dependencies
-include(cmake/glfw.cmake)
 include(cmake/glad.cmake)
+include(cmake/glfw.cmake)
+include(cmake/glm.cmake)
 
 # include header directory
 include_directories(include)
@@ -30,8 +31,9 @@ add_library(stem ${SOURCES})
 # link with dependencies
 target_link_libraries(stem
   ${OPENGL_LIBRARIES}
-  glfw
   glad
+  glfw
+  glm_static
 )
 
 # add examples
