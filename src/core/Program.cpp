@@ -76,7 +76,7 @@ Program::Program(const Settings settings) {
   glGetProgramiv(_id, GL_ACTIVE_UNIFORMS, &count);
 
   // iterate & store for value binding on usage
-  for (int index = 0; index < count; index++) {
+  for (size_t index = 0; index < count; index++) {
     char buffer[64];
     int length = 0;
     int size = 0;
