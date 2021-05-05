@@ -126,7 +126,7 @@ private:
   /// @param type The type of shader we're compiling
   /// @param source The shader's source code
   /// @return void
-  void compile(const GLenum type, const std::string &source) const;
+  inline void compile(const GLenum type, const std::string &source) const;
 
   /// @brief The internal gl program identifier
   uint32_t _id;

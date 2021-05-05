@@ -30,7 +30,8 @@ ProgramLinkException::ProgramLinkException(const uint32_t id) {
   _message = buffer;
 }
 
-void Program::compile(const GLenum type, const std::string &source) const {
+inline void
+Program::compile(const GLenum type, const std::string &source) const {
   // empty source code are not compiled
   if (source.empty()) return;
 
