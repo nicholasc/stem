@@ -4,7 +4,7 @@
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 #include <stem/core/Program.hpp>
-#include <stem/math/Vector2.hpp>
+#include <stem/math/Vector.hpp>
 
 int main(void) {
   GLFWwindow *window;
