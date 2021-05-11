@@ -5,6 +5,7 @@
 #include <GLFW/glfw3.h>
 #include <stem/core/Program.hpp>
 #include <stem/math/Vector.hpp>
+#include <stem/core/Buffer.hpp>
 
 int main(void) {
   GLFWwindow *window;
@@ -32,8 +33,6 @@ int main(void) {
     printf("Failed to initialize OpenGL context\n");
     return -1;
   }
-
-  float positions[6] = {-0.5f, -0.5f, 0.0f, 0.5f, 0.5f, -0.5f};
 
   const std::string vertex = R"(
     #version 330 core
@@ -64,19 +63,17 @@ int main(void) {
       },
   });
 
-  unsigned int buffer;
-  glGenBuffers(1, &buffer);
-  glBindBuffer(GL_ARRAY_BUFFER, buffer);
-  glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW);
+  stem::FloatBuffer buffer({-0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f});
 
   GLuint vertex_array;
   glGenVertexArrays(1, &vertex_array);
   glBindVertexArray(vertex_array);
 
+  const int stride = 2;
   const int pos = glGetAttribLocation(program.getId(), "position");
   glEnableVertexAttribArray(pos);
   glVertexAttribPointer(
-    pos, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, (void *)0
+    pos, 2, GL_FLOAT, GL_FALSE, sizeof(float) * stride, (void *)0
   );
 
   glBindVertexArray(vertex_array);
