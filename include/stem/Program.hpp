@@ -8,7 +8,7 @@
 
 #include <glad/gl.h>
 #include <stem/Exception.hpp>
-#include <stem/math/Vector.hpp>
+#include <stem/Vector.hpp>
 
 namespace stem {
 

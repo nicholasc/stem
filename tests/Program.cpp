@@ -1,5 +1,5 @@
 #include <catch.hpp>
-#include <stem/core/Program.hpp>
+#include <stem/Program.hpp>
 
 const std::string invalidShader = "syntax error;";
 const std::string validShader = "void main() {}";

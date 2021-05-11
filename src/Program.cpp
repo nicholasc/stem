@@ -1,6 +1,6 @@
 #include <iostream>
 #include <glm/gtc/type_ptr.hpp>
-#include <stem/core/Program.hpp>
+#include <stem/Program.hpp>
 
 namespace stem {
 

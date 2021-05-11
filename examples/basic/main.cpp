@@ -3,9 +3,10 @@
 #include <iostream>
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
-#include <stem/core/Program.hpp>
-#include <stem/math/Vector.hpp>
-#include <stem/core/Buffer.hpp>
+#include <stem/Program.hpp>
+#include <stem/Vector.hpp>
+#include <stem/Buffer.hpp>
+#include <stem/Geometry.hpp>
 
 int main(void) {
   GLFWwindow *window;
@@ -63,7 +64,21 @@ int main(void) {
       },
   });
 
-  stem::FloatBuffer buffer({-0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f});
+  stem::FloatBuffer buffer(
+    {-1.f,
+     -1.f,
+     1.f,
+     -1.f,
+     1.f,
+     1.0f,
+
+     1.f,
+     1.f,
+     -1.f,
+     1.f,
+     -1.f,
+     -1.f}
+  );
 
   GLuint vertex_array;
   glGenVertexArrays(1, &vertex_array);
@@ -85,7 +100,7 @@ int main(void) {
     program.use();
 
     // glBindBuffer(GL_ARRAY_BUFFER, buffer);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
 
     /* Swap front and back buffers */
     glfwSwapBuffers(window);
@@ -94,6 +109,7 @@ int main(void) {
     glfwPollEvents();
   }
 
+  buffer.destroy();
   program.destroy();
 
   glfwTerminate();

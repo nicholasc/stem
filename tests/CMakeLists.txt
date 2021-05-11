@@ -14,7 +14,7 @@ if(ENABLE_GL_TESTS)
 
   # append gl tests
   list(APPEND SOURCES
-    core/Program.cpp
+    Program.cpp
   )
 endif()
 
