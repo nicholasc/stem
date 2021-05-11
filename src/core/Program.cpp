@@ -44,9 +44,7 @@ Program::compile(const GLenum type, const std::string &source) const {
   // throw syntax error on failure
   int success;
   glGetShaderiv(shaderId, GL_COMPILE_STATUS, &success);
-  if (!success) {
-    throw ShaderSyntaxError(shaderId);
-  }
+  if (!success) throw ShaderSyntaxError(shaderId);
 
   // attach shader & release
   glAttachShader(_id, shaderId);
@@ -69,9 +67,7 @@ Program::Program(const Settings settings) {
   // throw linking error on failure
   int success;
   glGetProgramiv(_id, GL_LINK_STATUS, &success);
-  if (!success) {
-    throw ProgramLinkException(_id);
-  }
+  if (!success) throw ProgramLinkException(_id);
 
   // get active uniforms count
   int count;
