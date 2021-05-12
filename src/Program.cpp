@@ -1,4 +1,3 @@
-#include <iostream>
 #include <glm/gtc/type_ptr.hpp>
 #include <stem/Program.hpp>
 
