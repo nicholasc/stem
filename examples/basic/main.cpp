@@ -37,7 +37,7 @@ int main(void) {
 
   const std::string vertex = R"(
     #version 330 core
-    layout(location = 0) in vec2 position;
+    in vec2 position;
 
     void main() {
       gl_Position = vec4(position, 0.0f, 1.0f);
@@ -46,7 +46,7 @@ int main(void) {
 
   const std::string fragment = R"(
     #version 330 core
-    layout(location = 0) out vec4 color;
+    out vec4 color;
     uniform vec2 resolution;
 
     void main() {
@@ -58,46 +58,30 @@ int main(void) {
   stem::Program program({
     .vertex = vertex,
     .fragment = fragment,
-    .uniforms =
-      {
-        {.name = "resolution", .value = stem::Vector2f{640.f, 480.f}},
-      },
+    .uniforms = {{"resolution", stem::Vector2f{640.f, 480.f}}},
   });
 
-  stem::FloatBuffer buffer(
-    {-1.f,
-     -1.f,
-     1.f,
-     -1.f,
-     1.f,
-     1.0f,
+  // clang-format off
+  stem::Geometry geometry({
+    {"position", stem::FloatBuffer({
+      -1.f, -1.f,
+      1.f, -1.f,
+      1.f, 1.0f,
 
-     1.f,
-     1.f,
-     -1.f,
-     1.f,
-     -1.f,
-     -1.f}
-  );
+      1.f, 1.f,
+      -1.f, 1.f,
+      -1.f, -1.f
+    })}
+  });
+  // clang-format on
 
-  GLuint vertex_array;
-  glGenVertexArrays(1, &vertex_array);
-  glBindVertexArray(vertex_array);
-
-  const int stride = 2;
-  const int pos = glGetAttribLocation(program.getId(), "position");
-  glEnableVertexAttribArray(pos);
-  glVertexAttribPointer(
-    pos, 2, GL_FLOAT, GL_FALSE, sizeof(float) * stride, (void *)0
-  );
-
-  glBindVertexArray(vertex_array);
   /* Loop until the user closes the window */
   while (!glfwWindowShouldClose(window)) {
     /* Render here */
     glClear(GL_COLOR_BUFFER_BIT);
 
     program.use();
+    geometry.draw(program);
 
     // glBindBuffer(GL_ARRAY_BUFFER, buffer);
     glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -109,7 +93,7 @@ int main(void) {
     glfwPollEvents();
   }
 
-  buffer.destroy();
+  // geometry.destroy();
   program.destroy();
 
   glfwTerminate();
