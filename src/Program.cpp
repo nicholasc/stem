@@ -99,10 +99,6 @@ Program::Program(const Settings settings) {
   }
 }
 
-Program::~Program() {
-  destroy();
-}
-
 const uint32_t Program::getId() const {
   return _id;
 }

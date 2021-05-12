@@ -65,10 +65,6 @@ public:
   /// @return Program
   Program(const Settings settings = Settings());
 
-  /// @brief Program destructor
-  /// @return void
-  ~Program();
-
   /// @brief Returns the shader identifier
   /// @return The shader identifier
   const uint32_t getId() const;

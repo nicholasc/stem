@@ -2,6 +2,7 @@
 
 #include <glad/gl.h>
 
+#include <iostream>
 namespace stem {
 
 template <uint32_t BufferType, typename ValueType>
@@ -24,10 +25,6 @@ public:
   /// @param usage The buffer's data usage method
   /// @return Buffer
   Buffer(const std::vector<ValueType> array, const Usage usage);
-
-  /// @brief Buffer destructor
-  /// @return void
-  ~Buffer();
 
   /// @brief Destroys the buffer instance
   /// @return voi

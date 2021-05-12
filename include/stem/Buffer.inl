@@ -14,11 +14,6 @@ Buffer<BufferType, ValueType>::Buffer(
 }
 
 template <uint32_t BufferType, typename ValueType>
-Buffer<BufferType, ValueType>::~Buffer() {
-  destroy();
-}
-
-template <uint32_t BufferType, typename ValueType>
 void Buffer<BufferType, ValueType>::destroy() {
   glDeleteBuffers(1, &_id);
   _id = 0;
