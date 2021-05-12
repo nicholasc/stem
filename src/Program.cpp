@@ -143,6 +143,19 @@ void Program::setUniform(const Uniform uniform) {
   setUniform(uniform.first, uniform.second);
 };
 
+const std::optional<Program::ActiveAttribute>
+Program::getAttribute(const std::string name) const {
+  auto iterator = _activeAttributes.find(name);
+  if (iterator == _activeAttributes.end()) return {};
+
+  return iterator->second;
+}
+
+const std::unordered_map<std::string, Program::ActiveAttribute> &
+Program::getAttributes() const {
+  return _activeAttributes;
+}
+
 void Program::use() {
   // bind program for usage
   glUseProgram(_id);

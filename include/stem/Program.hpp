@@ -4,6 +4,7 @@
 #include <variant>
 #include <utility>
 #include <vector>
+#include <optional>
 #include <unordered_map>
 
 #include <glad/gl.h>
@@ -60,35 +61,6 @@ public:
     const std::vector<Uniform> uniforms;
   };
 
-  /// @brief Program constructor
-  /// @param settings The program settings
-  /// @return Program
-  Program(const Settings settings = Settings());
-
-  /// @brief Returns the shader identifier
-  /// @return The shader identifier
-  const uint32_t getId() const;
-
-  /// @brief Sets the value of an active uniform if it exists
-  /// @param name The name of the targeted active uniform
-  /// @param value The value to set
-  /// @return void
-  void setUniform(const std::string name, const UniformValue value);
-
-  /// @brief Sets the value of an active uniform if it exists
-  /// @param uniform The uniform data for the targeted active uniform
-  /// @return void
-  void setUniform(const Uniform uniform);
-
-  /// @brief Binds the program for usage
-  /// @return void
-  void use();
-
-  /// @brief Destroys the program instance
-  /// @return void
-  void destroy();
-
-private:
   /// @brief Stores the state of an active uniform
   struct ActiveUniform {
     /// @brief The active uniform' location
@@ -129,6 +101,43 @@ private:
     }
   };
 
+  /// @brief Program constructor
+  /// @param settings The program settings
+  /// @return Program
+  Program(const Settings settings = Settings());
+
+  /// @brief Returns the shader identifier
+  /// @return The shader identifier
+  const uint32_t getId() const;
+
+  /// @brief Sets the value of an active uniform if it exists
+  /// @param name The name of the targeted active uniform
+  /// @param value The value to set
+  /// @return void
+  void setUniform(const std::string name, const UniformValue value);
+
+  /// @brief Sets the value of an active uniform if it exists
+  /// @param uniform The uniform data for the targeted active uniform
+  /// @return void
+  void setUniform(const Uniform uniform);
+
+  /// @brief Gets an active attribute from the program
+  /// @param name The of the active attribute we're looking for
+  /// @return An optional ActiveAttribute object
+  const std::optional<ActiveAttribute>
+  getAttribute(const std::string name) const;
+
+  const std::unordered_map<std::string, ActiveAttribute> &getAttributes() const;
+
+  /// @brief Binds the program for usage
+  /// @return void
+  void use();
+
+  /// @brief Destroys the program instance
+  /// @return void
+  void destroy();
+
+private:
   /// @brief Compiles, attaches and destroys a shader to the program.
   /// @param type The type of shader we're compiling
   /// @param source The shader's source code
