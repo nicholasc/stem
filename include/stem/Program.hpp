@@ -42,7 +42,7 @@ public:
     Vector2d>
     UniformValue;
 
-  /// @brief A simple uniform structure
+  /// @brief Defines a simple uniform
   typedef std::pair<const std::string, const UniformValue> Uniform;
 
   /// @brief Allowed settings when creating a program
