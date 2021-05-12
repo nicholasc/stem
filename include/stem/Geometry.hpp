@@ -30,10 +30,6 @@ public:
   /// @return Geometry
   Geometry(const std::vector<Attribute> attributes);
 
-  /// @brief Geometry destructor
-  /// @return void
-  ~Geometry();
-
   /// @brief Sets the index buffer attribute for the geometry
   /// @param buffer The index buffer to assign to the geometry
   /// @return void
@@ -49,6 +45,10 @@ public:
   /// @param program The program to use to draw the geometry
   /// @return void
   void draw(Program program);
+
+  /// @brief Destroys the vertex array instances
+  /// @return void
+  void destroy();
 
 private:
   /// @brief The internal gl vertex array identifiers for a specific program

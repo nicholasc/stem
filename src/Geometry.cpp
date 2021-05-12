@@ -12,16 +12,6 @@ Geometry::Geometry(const std::vector<Attribute> attributes) {
   }
 }
 
-Geometry::~Geometry() {
-  // iterate and destroy buffer attributes
-  for (Attribute attribute : _attributes) {
-    std::visit(
-      [](auto &&buffer) { buffer.destroy(); },
-      static_cast<BufferAttribute>(attribute.second)
-    );
-  }
-}
-
 void Geometry::setAttribute(
   const std::string name,
   const BufferAttribute buffer
@@ -63,6 +53,21 @@ void Geometry::draw(Program program) {
         attribute.second
       );
     }
+  }
+}
+
+void Geometry::destroy() {
+  // iterate and destroy buffer attributes
+  for (Attribute attribute : _attributes) {
+    std::visit(
+      [](auto &&buffer) { buffer.destroy(); },
+      static_cast<BufferAttribute>(attribute.second)
+    );
+  }
+
+  // iterate and destroy vertex arrays
+  for (size_t i = 0; i < _ids.size(); i++) {
+    glDeleteVertexArrays(1, &_ids[i]);
   }
 }
 

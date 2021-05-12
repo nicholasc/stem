@@ -93,7 +93,7 @@ int main(void) {
     glfwPollEvents();
   }
 
-  // geometry.destroy();
+  geometry.destroy();
   program.destroy();
 
   glfwTerminate();
