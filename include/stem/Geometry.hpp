@@ -23,6 +23,8 @@ public:
     Int8Buffer>
     BufferAttribute;
 
+  // TODO: higher level GeometryAttribute for stride & offset (reusing buffers)
+
   /// @brief Defines a simple geometry attribute
   typedef std::pair<const std::string, const BufferAttribute> Attribute;
 
