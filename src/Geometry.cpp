@@ -31,29 +31,37 @@ void Geometry::draw(Program program) {
     glGenVertexArrays(1, id);
     glBindVertexArray(*id);
 
-    // iterate & assign attributes to the program
-    for (Attribute attribute : _attributes) {
-      const std::string name = attribute.first;
+    // iterate program' active attributes
+    for (auto pair : program.getAttributes()) {
+      const std::string &name = pair.first;
+      const Program::ActiveAttribute &attribute = pair.second;
 
-      // find the attribute index in the program if it exists
-      const int index = glGetAttribLocation(program.getId(), name.c_str());
-      if (index == -1) continue;
+      // attempt to find a corresponding geometry attribute
+      auto iterator = _attributes.find(name);
+      if (iterator == _attributes.end()) continue;
 
-      // visit the buffer attribute
-      std::visit(
-        [index](auto &&buffer) {
-          buffer.bind();
+      // generate a bind attribute lamba
+      const auto bindAttribute = [attribute](auto &&buffer) {
+        buffer.bind();
 
-          // point vertex attribute to our currently bound buffer
-          glEnableVertexAttribArray(index);
-          glVertexAttribPointer(
-            index, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, (void *)0
-          );
-        },
-        attribute.second
-      );
+        // vertex attribute to our currently bound buffer
+        glEnableVertexAttribArray(attribute.location);
+        glVertexAttribPointer(
+          attribute.location,
+          2, // size based on active attribute gl type
+          buffer.getType(),
+          GL_FALSE,
+          sizeof(float) * 2, // stride base on attribute type
+          (void *)0          // offset should be based on the attribute
+        );
+      };
+
+      // visit the buffer attribute & bind it
+      std::visit(bindAttribute, iterator->second);
     }
   }
+
+  glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
 void Geometry::destroy() {
