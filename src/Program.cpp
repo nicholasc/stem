@@ -119,7 +119,7 @@ void Program::setUniform(const std::string name, const UniformValue value) {
 }
 
 void Program::setUniform(const Uniform uniform) {
-  setUniform(uniform.name, uniform.value);
+  setUniform(uniform.first, uniform.second);
 };
 
 void Program::use() {

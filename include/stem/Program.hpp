@@ -43,13 +43,7 @@ public:
     UniformValue;
 
   /// @brief A simple uniform structure
-  struct Uniform {
-    /// @brief The uniform' name
-    std::string name;
-
-    /// @brief The uniform' value
-    UniformValue value;
-  };
+  typedef std::pair<const std::string, const UniformValue> Uniform;
 
   /// @brief Allowed settings when creating a program
   struct Settings {
