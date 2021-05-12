@@ -8,6 +8,26 @@
 #include <stem/Buffer.hpp>
 #include <stem/Geometry.hpp>
 
+const std::string vertex = R"(
+  #version 330 core
+  in vec2 position;
+
+  void main() {
+    gl_Position = vec4(position, 0.0f, 1.0f);
+  }
+)";
+
+const std::string fragment = R"(
+  #version 330 core
+  out vec4 color;
+  uniform vec2 resolution;
+
+  void main() {
+    vec2 uv = gl_FragCoord.xy / resolution;
+    color = vec4(uv.x, uv.y, 0.0, 1.0);
+  }
+)";
+
 int main(void) {
   GLFWwindow *window;
 
@@ -35,26 +55,7 @@ int main(void) {
     return -1;
   }
 
-  const std::string vertex = R"(
-    #version 330 core
-    in vec2 position;
-
-    void main() {
-      gl_Position = vec4(position, 0.0f, 1.0f);
-    }
-  )";
-
-  const std::string fragment = R"(
-    #version 330 core
-    out vec4 color;
-    uniform vec2 resolution;
-
-    void main() {
-      vec2 uv = gl_FragCoord.xy / resolution;
-      color = vec4(uv.x, uv.y, 0.0, 1.0);
-    }
-  )";
-
+  // create a simple program
   stem::Program program({
     .vertex = vertex,
     .fragment = fragment,
@@ -62,6 +63,7 @@ int main(void) {
   });
 
   // clang-format off
+  // create a simple square geometry
   stem::Geometry geometry({
     {"position", stem::FloatBuffer({
       -1.f, -1.f,
@@ -82,9 +84,6 @@ int main(void) {
 
     program.use();
     geometry.draw(program);
-
-    // glBindBuffer(GL_ARRAY_BUFFER, buffer);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
 
     /* Swap front and back buffers */
     glfwSwapBuffers(window);
