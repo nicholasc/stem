@@ -112,6 +112,23 @@ private:
     }
   };
 
+  /// @brief Stores the state of an active attribute
+  struct ActiveAttribute {
+    /// @brief The active attribute' location
+    const int location;
+
+    /// @brief The active attribute' type
+    const uint32_t type;
+
+    /// @brief ActiveAtttribute constructor
+    /// @param location The active attribute' location
+    /// @param type The active attribute' type
+    /// @return ActiveAtttribute
+    ActiveAttribute(const int location, const uint32_t type) :
+      location(location), type(type) {
+    }
+  };
+
   /// @brief Compiles, attaches and destroys a shader to the program.
   /// @param type The type of shader we're compiling
   /// @param source The shader's source code
@@ -123,6 +140,9 @@ private:
 
   /// @brief The program' active uniforms
   std::unordered_map<std::string, ActiveUniform> _activeUniforms;
+
+  /// @brief The program' active attributes
+  std::unordered_map<std::string, ActiveAttribute> _activeAttributes;
 };
 
 } // namespace stem

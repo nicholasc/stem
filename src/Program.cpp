@@ -68,8 +68,9 @@ Program::Program(const Settings settings) {
   glGetProgramiv(_id, GL_LINK_STATUS, &success);
   if (!success) throw ProgramLinkException(_id);
 
-  // get active uniforms count
   int count;
+
+  // get active uniforms count
   glGetProgramiv(_id, GL_ACTIVE_UNIFORMS, &count);
 
   // iterate & store for value binding on usage
@@ -95,6 +96,31 @@ Program::Program(const Settings settings) {
   // iterate uniforms settings
   for (const Uniform uniform : settings.uniforms) {
     setUniform(uniform);
+  }
+
+  // get active attributes count
+  glGetProgramiv(_id, GL_ACTIVE_ATTRIBUTES, &count);
+
+  // iterate & store for geometry attributes binding
+  for (size_t index = 0; index < count; index++) {
+    char buffer[64];
+    int length = 0;
+    int size = 0;
+    uint32_t type = 0;
+
+    // get active attribute information
+    glGetActiveAttrib(
+      _id, index, sizeof(buffer), &length, &size, &type, buffer
+    );
+
+    // get location & convert buffer to name
+    const int location = glGetAttribLocation(_id, buffer);
+    const std::string name(buffer);
+
+    // store active attribute
+    _activeAttributes.insert(
+      std::make_pair(name, ActiveAttribute(location, type))
+    );
   }
 }
 
