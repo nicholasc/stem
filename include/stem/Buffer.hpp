@@ -2,10 +2,9 @@
 
 #include <glad/gl.h>
 
-#include <iostream>
 namespace stem {
 
-template <uint32_t BufferType, typename ValueType>
+template <uint32_t GLBufferType, uint32_t GLValueType, typename ValueType>
 class Buffer {
 public:
   /// @brief Defines possible buffer usage methods
@@ -34,21 +33,28 @@ public:
   /// @return void
   void bind() const;
 
+  /// @brief Returns the current buffer type
+  /// @return The current buffer type
+  const uint32_t getType() const;
+
 private:
-  /// @brief The internal gl buffer identifier
+  /// @brief The buffer' gl identifier
   uint32_t _id;
+
+  /// @brief The buffer' gl type
+  uint32_t _type = GLValueType;
 };
 
 #include "Buffer.inl"
 
-// declare basic buffer types
-typedef Buffer<GL_ARRAY_BUFFER, float> FloatBuffer;
-typedef Buffer<GL_ARRAY_BUFFER, uint32_t> Uint32Buffer;
-typedef Buffer<GL_ARRAY_BUFFER, uint16_t> Uint16Buffer;
-typedef Buffer<GL_ARRAY_BUFFER, uint8_t> Uint8Buffer;
-typedef Buffer<GL_ARRAY_BUFFER, int32_t> Int32Buffer;
-typedef Buffer<GL_ARRAY_BUFFER, int16_t> Int16Buffer;
-typedef Buffer<GL_ARRAY_BUFFER, int8_t> Int8Buffer;
-typedef Buffer<GL_ELEMENT_ARRAY_BUFFER, uint32_t> IndexBuffer;
+// declare default buffer types
+typedef Buffer<GL_ARRAY_BUFFER, GL_FLOAT, float> FloatBuffer;
+typedef Buffer<GL_ARRAY_BUFFER, GL_UNSIGNED_INT, uint32_t> Uint32Buffer;
+typedef Buffer<GL_ARRAY_BUFFER, GL_UNSIGNED_INT, uint16_t> Uint16Buffer;
+typedef Buffer<GL_ARRAY_BUFFER, GL_UNSIGNED_INT, uint8_t> Uint8Buffer;
+typedef Buffer<GL_ARRAY_BUFFER, GL_INT, int32_t> Int32Buffer;
+typedef Buffer<GL_ARRAY_BUFFER, GL_INT, int16_t> Int16Buffer;
+typedef Buffer<GL_ARRAY_BUFFER, GL_INT, int8_t> Int8Buffer;
+typedef Buffer<GL_ELEMENT_ARRAY_BUFFER, GL_UNSIGNED_INT, uint32_t> IndexBuffer;
 
 } // namespace stem

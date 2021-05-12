@@ -1,25 +1,34 @@
-template <uint32_t BufferType, typename ValueType>
-Buffer<BufferType, ValueType>::Buffer(const std::vector<ValueType> array) :
+template <uint32_t GLBufferType, uint32_t GLValueType, typename ValueType>
+Buffer<GLBufferType, GLValueType, ValueType>::Buffer(
+  const std::vector<ValueType> array
+) :
   Buffer(array, Stream){};
 
-template <uint32_t BufferType, typename ValueType>
-Buffer<BufferType, ValueType>::Buffer(
+template <uint32_t GLBufferType, uint32_t GLValueType, typename ValueType>
+Buffer<GLBufferType, GLValueType, ValueType>::Buffer(
   const std::vector<ValueType> array,
   const Usage usage
 ) {
   glGenBuffers(1, &_id);
   bind();
 
-  glBufferData(BufferType, array.size() * sizeof(ValueType), &array[0], usage);
+  glBufferData(
+    GLBufferType, array.size() * sizeof(ValueType), &array[0], usage
+  );
 }
 
-template <uint32_t BufferType, typename ValueType>
-void Buffer<BufferType, ValueType>::destroy() {
+template <uint32_t GLBufferType, uint32_t GLValueType, typename ValueType>
+void Buffer<GLBufferType, GLValueType, ValueType>::destroy() {
   glDeleteBuffers(1, &_id);
   _id = 0;
 }
 
-template <uint32_t BufferType, typename ValueType>
-void Buffer<BufferType, ValueType>::bind() const {
-  glBindBuffer(BufferType, _id);
+template <uint32_t GLBufferType, uint32_t GLValueType, typename ValueType>
+void Buffer<GLBufferType, GLValueType, ValueType>::bind() const {
+  glBindBuffer(GLBufferType, _id);
+}
+
+template <uint32_t GLBufferType, uint32_t GLValueType, typename ValueType>
+const uint32_t Buffer<GLBufferType, GLValueType, ValueType>::getType() const {
+  return _type;
 }
