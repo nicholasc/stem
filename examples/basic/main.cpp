@@ -65,15 +65,19 @@ int main(void) {
   // clang-format off
   // create a simple square geometry
   stem::Geometry geometry({
-    {"position", stem::FloatBuffer({
-      -1.f, -1.f,
-      1.f, -1.f,
-      1.f, 1.0f,
+    {
+      .name = "position",
+      .size = 2,
+      .buffer = stem::FloatBuffer({
+        -1.f, -1.f,
+        1.f, -1.f,
+        1.f, 1.0f,
 
-      1.f, 1.f,
-      -1.f, 1.f,
-      -1.f, -1.f
-    })}
+        1.f, 1.f,
+        -1.f, 1.f,
+        -1.f, -1.f
+      })
+    }
   });
   // clang-format on
 
