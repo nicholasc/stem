@@ -35,30 +35,31 @@ void Geometry::draw(Program program) {
       if (iterator == _attributes.end()) continue;
 
       // retrieve the geometry attribute size & buffer
-      const int32_t size = iterator->second.size;
+      const Attribute &attribute = iterator->second;
       const BufferVariant &buffer = iterator->second.buffer;
 
       // generate a bind attribute lamba
-      const auto bindAttribute = [location, size](auto &&buffer) -> void {
+      const auto bindAttribute = [location, attribute](auto &&buffer) -> void {
         buffer.bind();
 
         // vertex attribute to our currently bound buffer
         glEnableVertexAttribArray(location);
         glVertexAttribPointer(
           location,
-          size,
+          attribute.size,
           buffer.getType(),
-          GL_FALSE,          // normalized or not
-          sizeof(float) * 2, // stride base on attribute type
-          (void *)0          // offset should be based on the attribute
+          attribute.normalized,
+          attribute.stride,
+          (void *)attribute.offset
         );
       };
 
-      // visit the buffer attribute & bind it
+      // visit buffer & bind it to attribute
       std::visit(bindAttribute, buffer);
     }
   }
 
+  // TODO: deal with index drawing
   glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 

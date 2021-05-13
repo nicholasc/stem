@@ -19,6 +19,15 @@ public:
     /// @brief A single attribute' size in the buffer
     int32_t size = 1;
 
+    /// @brief The attribute' consecutive byte offset
+    int32_t stride = 0;
+
+    /// @brief Whether fixed-point data values should be normalized
+    bool normalized = false;
+
+    /// @brief The first attribute' offset
+    signed long int offset = 0;
+
     /// @brief The attribute' buffer variant
     BufferVariant buffer;
   };
