@@ -1,5 +1,6 @@
 #pragma once
 
+#include <variant>
 #include <glad/gl.h>
 
 namespace stem {
@@ -56,5 +57,16 @@ typedef Buffer<GL_ARRAY_BUFFER, GL_INT, int32_t> Int32Buffer;
 typedef Buffer<GL_ARRAY_BUFFER, GL_INT, int16_t> Int16Buffer;
 typedef Buffer<GL_ARRAY_BUFFER, GL_INT, int8_t> Int8Buffer;
 typedef Buffer<GL_ELEMENT_ARRAY_BUFFER, GL_UNSIGNED_INT, uint32_t> IndexBuffer;
+
+// define posible buffer variations
+typedef std::variant<
+  FloatBuffer,
+  Uint32Buffer,
+  Uint16Buffer,
+  Uint8Buffer,
+  Int32Buffer,
+  Int16Buffer,
+  Int8Buffer>
+  BufferVariant;
 
 } // namespace stem
