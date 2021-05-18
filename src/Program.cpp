@@ -171,40 +171,40 @@ void Program::use() {
 
     // send the value the program on the gpu
     switch (uniform.type) {
-    case GL_INT: {
+    case GL_INT:
       glAssert(glUniform1i(uniform.location, std::get<int>(uniform.value)));
-    }
-    case GL_UNSIGNED_INT: {
+      break;
+    case GL_UNSIGNED_INT:
       glAssert(
         glUniform1f(uniform.location, std::get<unsigned int>(uniform.value))
       );
-    }
-    case GL_FLOAT: {
+      break;
+    case GL_FLOAT:
       glAssert(glUniform1f(uniform.location, std::get<float>(uniform.value)));
-    }
-    case GL_DOUBLE: {
+      break;
+    case GL_DOUBLE:
       glAssert(glUniform1f(uniform.location, std::get<double>(uniform.value)));
-    }
-    case GL_INT_VEC2: {
+      break;
+    case GL_INT_VEC2:
       glAssert(glUniform2iv(
         uniform.location, 1, glm::value_ptr(std::get<Vector2i>(uniform.value))
       ));
-    }
-    case GL_UNSIGNED_INT_VEC2: {
+      break;
+    case GL_UNSIGNED_INT_VEC2:
       glAssert(glUniform2uiv(
         uniform.location, 1, glm::value_ptr(std::get<Vector2u>(uniform.value))
       ));
-    }
-    case GL_FLOAT_VEC2: {
+      break;
+    case GL_FLOAT_VEC2:
       glAssert(glUniform2fv(
         uniform.location, 1, glm::value_ptr(std::get<Vector2f>(uniform.value))
       ));
-    }
-    case GL_DOUBLE_VEC2: {
+      break;
+    case GL_DOUBLE_VEC2:
       glAssert(glUniform2dv(
         uniform.location, 1, glm::value_ptr(std::get<Vector2d>(uniform.value))
       ));
-    }
+      break;
     }
 
     // mark uniform as updated
