@@ -19,6 +19,11 @@ include(cmake/glad.cmake)
 include(cmake/glfw.cmake)
 include(cmake/glm.cmake)
 
+# detect debug mode
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+  add_definitions(-DSTEM_DEBUG)
+endif()
+
 # include header directory
 include_directories(include)
 
