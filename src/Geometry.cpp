@@ -9,6 +9,10 @@ Geometry::Geometry(const std::vector<Attribute> attributes) {
   }
 }
 
+void Geometry::setIndex(const IndexBuffer index) {
+  _index = index;
+}
+
 void Geometry::setAttribute(const Attribute attribute) {
   // store the attribute
   _attributes.try_emplace(attribute.name, attribute);
@@ -59,8 +63,19 @@ void Geometry::draw(Program program) {
     }
   }
 
-  // TODO: deal with index drawing
-  glDrawArrays(GL_TRIANGLES, 0, 6);
+  // draw arrays without index
+  if (!_index) {
+    // TODO: implement draw count or something to draw dynamic
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    return;
+  }
+
+  // retrieve & bind the index buffer
+  IndexBuffer &index = _index.value();
+  index.bind();
+
+  // draw our geometry elements
+  glDrawElements(GL_TRIANGLES, index.getSize(), index.getType(), nullptr);
 }
 
 void Geometry::destroy() {

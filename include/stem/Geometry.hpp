@@ -56,8 +56,11 @@ public:
   void destroy();
 
 private:
-  /// @brief The internal gl vertex array identifiers for a specific program
+  /// @brief The internal gl vertex array identifiers for specific programs
   std::unordered_map<uint32_t, uint32_t> _ids;
+
+  /// @brief The geometry' index buffer instance
+  std::optional<IndexBuffer> _index;
 
   /// @brief The geometry' buffer attributes
   std::unordered_map<std::string, Attribute> _attributes;

@@ -71,14 +71,15 @@ int main(void) {
       .buffer = stem::FloatBuffer({
         -1.f, -1.f,
         1.f, -1.f,
-        1.f, 1.0f,
-
+        // 1.f, 1.f,
         1.f, 1.f,
         -1.f, 1.f,
-        -1.f, -1.f
+        // -1.f, -1.f,
       })
-    }
-  });
+    }}
+  );
+
+  geometry.setIndex(stem::IndexBuffer({ 0, 1, 2, 2, 3, 0 }));
   // clang-format on
 
   /* Loop until the user closes the window */
