@@ -1,3 +1,4 @@
+#include <stem/Error.hpp>
 #include <stem/Geometry.hpp>
 
 namespace stem {
@@ -26,8 +27,8 @@ void Geometry::draw(Program program) {
     uint32_t *id = &_ids[program.getId()];
 
     // create & bind the vertex array
-    glGenVertexArrays(1, id);
-    glBindVertexArray(*id);
+    glAssert(glGenVertexArrays(1, id));
+    glAssert(glBindVertexArray(*id));
 
     // iterate program' active attributes
     for (const auto pair : program.getAttributes()) {
@@ -47,15 +48,15 @@ void Geometry::draw(Program program) {
         buffer.bind();
 
         // vertex attribute to our currently bound buffer
-        glEnableVertexAttribArray(location);
-        glVertexAttribPointer(
+        glAssert(glEnableVertexAttribArray(location));
+        glAssert(glVertexAttribPointer(
           location,
           attribute.size,
           buffer.getType(),
           attribute.normalized,
           attribute.stride,
           (void *)attribute.offset
-        );
+        ));
       };
 
       // visit buffer & bind it to attribute
@@ -66,7 +67,7 @@ void Geometry::draw(Program program) {
   // draw arrays without index
   if (!_index) {
     // TODO: implement draw count or something to draw dynamic
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glAssert(glDrawArrays(GL_TRIANGLES, 0, 6));
     return;
   }
 
@@ -75,7 +76,9 @@ void Geometry::draw(Program program) {
   index.bind();
 
   // draw our geometry elements
-  glDrawElements(GL_TRIANGLES, index.getSize(), index.getType(), nullptr);
+  glAssert(
+    glDrawElements(GL_TRIANGLES, index.getSize(), index.getType(), nullptr)
+  );
 }
 
 void Geometry::destroy() {
@@ -89,7 +92,7 @@ void Geometry::destroy() {
 
   // iterate and destroy vertex arrays
   for (size_t i = 0; i < _ids.size(); i++) {
-    glDeleteVertexArrays(1, &_ids[i]);
+    glAssert(glDeleteVertexArrays(1, &_ids[i]));
   }
 }
 

@@ -2,6 +2,7 @@
 
 #include <variant>
 #include <glad/gl.h>
+#include <stem/Error.hpp>
 
 namespace stem {
 
