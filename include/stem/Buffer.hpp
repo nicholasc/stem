@@ -34,6 +34,14 @@ public:
   /// @return void
   void bind() const;
 
+  /// @brief Returns the current buffer id
+  /// @return The current buffer id
+  const uint32_t getId() const;
+
+  /// @brief Returns the current buffer size
+  /// @return The current buffer size
+  const uint32_t getSize() const;
+
   /// @brief Returns the current buffer type
   /// @return The current buffer type
   const uint32_t getType() const;
@@ -41,6 +49,9 @@ public:
 private:
   /// @brief The buffer' gl identifier
   uint32_t _id;
+
+  /// @brief The buffer size
+  uint32_t _size;
 
   /// @brief The buffer' gl type
   uint32_t _type = GLValueType;
@@ -66,7 +77,8 @@ typedef std::variant<
   Uint8Buffer,
   Int32Buffer,
   Int16Buffer,
-  Int8Buffer>
+  Int8Buffer,
+  IndexBuffer>
   BufferVariant;
 
 } // namespace stem

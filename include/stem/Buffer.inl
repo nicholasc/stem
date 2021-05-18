@@ -12,9 +12,9 @@ Buffer<GLBufferType, GLValueType, ValueType>::Buffer(
   glGenBuffers(1, &_id);
   bind();
 
-  glBufferData(
-    GLBufferType, array.size() * sizeof(ValueType), &array[0], usage
-  );
+  _size = array.size() * sizeof(ValueType);
+
+  glBufferData(GLBufferType, _size, &array[0], usage);
 }
 
 template <uint32_t GLBufferType, uint32_t GLValueType, typename ValueType>
@@ -26,6 +26,16 @@ void Buffer<GLBufferType, GLValueType, ValueType>::destroy() {
 template <uint32_t GLBufferType, uint32_t GLValueType, typename ValueType>
 void Buffer<GLBufferType, GLValueType, ValueType>::bind() const {
   glBindBuffer(GLBufferType, _id);
+}
+
+template <uint32_t GLBufferType, uint32_t GLValueType, typename ValueType>
+const uint32_t Buffer<GLBufferType, GLValueType, ValueType>::getId() const {
+  return _id;
+}
+
+template <uint32_t GLBufferType, uint32_t GLValueType, typename ValueType>
+const uint32_t Buffer<GLBufferType, GLValueType, ValueType>::getSize() const {
+  return _size;
 }
 
 template <uint32_t GLBufferType, uint32_t GLValueType, typename ValueType>
