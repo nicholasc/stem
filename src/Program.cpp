@@ -4,7 +4,7 @@
 namespace stem {
 
 ShaderSyntaxError::ShaderSyntaxError(const uint32_t id) {
-  // get terror log length
+  // get error log length
   int length = 0;
   glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
 
