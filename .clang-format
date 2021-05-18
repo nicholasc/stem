@@ -41,5 +41,6 @@ ContinuationIndentWidth:                        2
 
 
 
+IndentPPDirectives:                             BeforeHash
 PointerAlignment:                               Right
 SortIncludes:                                   false
