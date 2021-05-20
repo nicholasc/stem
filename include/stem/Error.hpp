@@ -11,8 +11,8 @@ namespace stem {
   #define glAssert(statement)                                                  \
     do {                                                                       \
       statement;                                                               \
-      glCheckError(__FILE__, __LINE__, #statement);                            \
-    } while (0)
+      stem::glCheckError(__FILE__, __LINE__, #statement);                      \
+    } while (false)
 
 #else
 
