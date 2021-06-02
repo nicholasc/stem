@@ -91,7 +91,7 @@ void Geometry::destroy() {
   }
 
   // iterate and destroy vertex arrays
-  for (size_t i = 0; i < _ids.size(); i++) {
+  for (uint32_t i = 0; i < _ids.size(); i++) {
     glAssert(glDeleteVertexArrays(1, &_ids[i]));
   }
 }

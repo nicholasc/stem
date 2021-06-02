@@ -10,8 +10,8 @@ ShaderSyntaxError::ShaderSyntaxError(const uint32_t id) {
   glAssert(glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length));
 
   // fetch the error log buffer
-  char buffer[length];
-  glAssert(glGetShaderInfoLog(id, length, NULL, buffer));
+  char *buffer = (char *)alloca(length * sizeof(char));
+  glAssert(glGetShaderInfoLog(id, length, NULL, buffer));\
 
   // store as error message
   _message = buffer;
@@ -23,7 +23,7 @@ ProgramLinkException::ProgramLinkException(const uint32_t id) {
   glAssert(glGetProgramiv(id, GL_INFO_LOG_LENGTH, &length));
 
   // fetch the error log buffer
-  char buffer[length];
+  char *buffer = (char *)alloca(length * sizeof(char));
   glAssert(glGetProgramInfoLog(id, length, NULL, buffer));
 
   // store as error message
@@ -75,7 +75,7 @@ Program::Program(const Settings settings) {
   glAssert(glGetProgramiv(_id, GL_ACTIVE_UNIFORMS, &count));
 
   // iterate & store for value binding on usage
-  for (size_t index = 0; index < count; index++) {
+  for (int32_t index = 0; index < count; index++) {
     char buffer[64];
     int length = 0;
     int size = 0;
@@ -103,7 +103,7 @@ Program::Program(const Settings settings) {
   glAssert(glGetProgramiv(_id, GL_ACTIVE_ATTRIBUTES, &count));
 
   // iterate & store for geometry attributes binding
-  for (size_t index = 0; index < count; index++) {
+  for (int32_t index = 0; index < count; index++) {
     char buffer[64];
     int length = 0;
     int size = 0;
@@ -176,14 +176,14 @@ void Program::use() {
       break;
     case GL_UNSIGNED_INT:
       glAssert(
-        glUniform1f(uniform.location, std::get<unsigned int>(uniform.value))
+        glUniform1ui(uniform.location, std::get<unsigned int>(uniform.value))
       );
       break;
     case GL_FLOAT:
       glAssert(glUniform1f(uniform.location, std::get<float>(uniform.value)));
       break;
     case GL_DOUBLE:
-      glAssert(glUniform1f(uniform.location, std::get<double>(uniform.value)));
+      glAssert(glUniform1d(uniform.location, std::get<double>(uniform.value)));
       break;
     case GL_INT_VEC2:
       glAssert(glUniform2iv(
