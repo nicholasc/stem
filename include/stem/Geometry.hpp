@@ -64,6 +64,8 @@ private:
 
   /// @brief The geometry' buffer attributes
   std::unordered_map<std::string, Attribute> _attributes;
+
+  void createVAO(Program program);
 };
 
 } // namespace stem
