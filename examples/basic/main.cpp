@@ -55,7 +55,7 @@ int main(void) {
     return -1;
   }
 
-  // create a simple program
+  // create a simple shader program
   stem::Program program({
     .vertex = vertex,
     .fragment = fragment,
