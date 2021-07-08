@@ -32,6 +32,15 @@ public:
     BufferVariant buffer;
   };
 
+  /// @brief The geometry draw range start & count without index buffer
+  struct Range {
+    /// @brief The draw range start index
+    uint16_t start = 0;
+
+    /// @brief The draw range count
+    uint16_t count = 0;
+  };
+
   /// @brief Geometry constructor
   /// @return Geometry
   Geometry(const std::vector<Attribute> attributes);
@@ -45,6 +54,17 @@ public:
   /// @param attribute The attribute to set
   /// @return void
   void setAttribute(const Attribute attribute);
+
+  /// @brief Sets the geometry draw range
+  /// @param range The draw range to apply to this geometry
+  /// @return void
+  void setRange(const Range range);
+
+  /// @brief Sets the geometry draw range
+  /// @param start The draw range start index
+  /// @param count The draw range count
+  /// @return void
+  void setRange(const uint16_t start, const uint16_t count);
 
   /// @brief Draws the geometry to the current context using a program
   /// @param program The program to use to draw the geometry
@@ -65,6 +85,10 @@ private:
   /// @brief The geometry' buffer attributes
   std::unordered_map<std::string, Attribute> _attributes;
 
+  /// @brief The geometry' internal draw range reference
+  Range _range;
+
+  /// @brief Creates a vertex array object for a specific program id
   void createVAO(Program program);
 };
 

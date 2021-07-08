@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include <stem/Error.hpp>
 #include <stem/Geometry.hpp>
 
@@ -17,6 +19,22 @@ void Geometry::setIndex(const IndexBuffer index) {
 void Geometry::setAttribute(const Attribute attribute) {
   // store the attribute
   _attributes.try_emplace(attribute.name, attribute);
+
+  // generate update draw range count lambda
+  const auto updateRangeCount = [this, attribute](auto &&buffer) -> void {
+    _range.count = std::max(_range.count, (uint16_t)(buffer.getSize() / attribute.size));
+  };
+
+  // visit buffer & update draw range count
+  std::visit(updateRangeCount, attribute.buffer);
+}
+
+void Geometry::setRange(const Range range) {
+  _range = range;
+}
+
+void Geometry::setRange(const uint16_t start, const uint16_t count) {
+  _range = {start, count};
 }
 
 void Geometry::draw(Program program) {
@@ -27,8 +45,7 @@ void Geometry::draw(Program program) {
 
   // draw arrays without index
   if (!_index) {
-    // TODO: implement draw count or something to draw dynamic
-    glAssert(glDrawArrays(GL_TRIANGLES, 0, 6));
+    glAssert(glDrawArrays(GL_TRIANGLES, _range.start, _range.count));
   } else {
     // retrieve & bind the index buffer
     IndexBuffer &index = _index.value();
